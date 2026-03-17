@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
-const API = import.meta.env.VITE_API_URL || "http://localhost:8001";
+const API = import.meta.env.VITE_API_URL || "https://traiq-backend-production.up.railway.app";
 
 // ─── CONSTANTS ────────────────────────────────────────────────────────────────
 const A="#c8f45a",BG="#0a0a0a",SF="#111111",BD="#1e1e1e",MU="#3a3a3a",TX="#e8e8e8",DM="#6b6b6b";
