@@ -151,35 +151,9 @@ function AuthScreen({onAuth}) {
     if(!email||!password){setError("Please enter email and password");return;}
     setLoading(true);setError("");setSuccess("");
     try{
-      const SUPA_URL=import.meta.env.VITE_SUPABASE_URL||"https://fgxqvcckokhryyxzmfmo.supabase.co";
-      const SUPA_KEY=import.meta.env.VITE_SUPABASE_KEY||"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZneHF2Y2Nrb2tocnl5eHptZm1vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2OTY3OTksImV4cCI6MjA4OTI3Mjc5OX0.TSvxW34voqyrvUHYHHcUOmIkV6EoaLtRwRauN-xmwQk";
-      if(mode==="signup"){
-        const res=await fetch(`${SUPA_URL}/auth/v1/signup`,{
-          method:"POST",
-          headers:{"Content-Type":"application/json","apikey":SUPA_KEY},
-          body:JSON.stringify({email,password}),
-        });
-        const data=await res.json();
-        if(!res.ok)throw new Error(data.msg||data.error_description||"Signup failed");
-        // Auto sign in after signup
-        const res2=await fetch(`${SUPA_URL}/auth/v1/token?grant_type=password`,{
-          method:"POST",
-          headers:{"Content-Type":"application/json","apikey":SUPA_KEY},
-          body:JSON.stringify({email,password}),
-        });
-        const data2=await res2.json();
-        if(!res2.ok)throw new Error("Account created — please sign in.");
-        onAuth({token:data2.access_token,email,id:data2.user?.id});
-      } else {
-        const res=await fetch(`${SUPA_URL}/auth/v1/token?grant_type=password`,{
-          method:"POST",
-          headers:{"Content-Type":"application/json","apikey":SUPA_KEY},
-          body:JSON.stringify({email,password}),
-        });
-        const data=await res.json();
-        if(!res.ok)throw new Error(data.error_description||data.msg||"Invalid credentials");
-        onAuth({token:data.access_token,email,id:data.user?.id});
-      }
+      const path=mode==="signup"?"/auth/signup":"/auth/login";
+      const data=await apiCall(path,"POST",{email,password});
+      onAuth({token:data.access_token,email,id:data.user_id});
     }catch(e){setError(e.message);}
     setLoading(false);
   };
