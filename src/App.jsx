@@ -151,8 +151,8 @@ function AuthScreen({onAuth}) {
     if(!email||!password){setError("Please enter email and password");return;}
     setLoading(true);setError("");setSuccess("");
     try{
-      const SUPA_URL=import.meta.env.VITE_SUPABASE_URL;
-      const SUPA_KEY=import.meta.env.VITE_SUPABASE_KEY;
+      const SUPA_URL=import.meta.env.VITE_SUPABASE_URL||"https://fgxqvcckokhryyxzmfmo.supabase.co";
+      const SUPA_KEY=import.meta.env.VITE_SUPABASE_KEY||"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZneHF2Y2Nrb2tocnl5eHptZm1vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2OTY3OTksImV4cCI6MjA4OTI3Mjc5OX0.TSvxW34voqyrvUHYHHcUOmIkV6EoaLtRwRauN-xmwQk";
       if(mode==="signup"){
         const res=await fetch(`${SUPA_URL}/auth/v1/signup`,{
           method:"POST",
